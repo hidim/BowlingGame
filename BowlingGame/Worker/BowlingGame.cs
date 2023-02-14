@@ -1,14 +1,18 @@
-﻿
-/// <summary>
+﻿/// <summary>
 /// Bowling Game Core Worker class. 
 /// </summary>
 public class BowlingGame
 {
+    // Frame Counter
     private int _frameCounter;
+    // Hits on frame counter
     private int _frameHitCounter;
+    // Hits as represented on frame
     private int[,] _hits;
+    // Final frame for 3 hits
     private int[,,] _finalHit;
-    private int _score = 0;
+    // Latest calculated score for game. 
+    private int _score;
 
     public BowlingGame()
     {
@@ -19,9 +23,13 @@ public class BowlingGame
         _finalHit = new int[1, 1, 3] { { { -1, -1, -1 } } };
     }
 
+    /// <summary>
+    /// Player action that single roll. 
+    /// </summary>
+    /// <param name="pins">Knocked down pins for single hit.</param>
     public void Play(int pins)
     {
-        // Validation of frame numbers!
+        // Validation of frame's available hits!
         if (_frameHitCounter == 1 && _frameCounter < 9)
         {
             var prevHit = _hits[_frameCounter, 0];
@@ -55,16 +63,18 @@ public class BowlingGame
             }
         }
 
-
+        // Calculate every frame after hit happens.
         CalculateScore();
-
-        // Update counter for every hit to calculate frames and indexes.
-
     }
 
+    /// <summary>
+    /// Internal calculation method 
+    /// </summary>
     private void CalculateScore()
     {
         _score = 0;
+
+        // Strike calculator
         int _strikePoint = 0;
 
         // Calculating normal score
@@ -114,6 +124,10 @@ public class BowlingGame
         }
     }
 
+    /// <summary>
+    /// Score of the game calculated by every hit of frames.
+    /// </summary>
+    /// <returns>Score as int</returns>
     public int Score()
     {
         return _score;
